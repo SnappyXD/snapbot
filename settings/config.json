@@ -1,0 +1,16 @@
+{
+	"ownername":"SnappyXD",
+	"ownernumber":"628813100198",
+	"ownernumber2":"6281352402264",
+	"ownernumber3":"16073002812",
+	"ownernumber4":"18038841108",
+	"ownernumber5":"17244016489",
+	"botname":"SnapBotzz",
+	"thumbnail":"./settings/snappy.jpg",
+	"myweb" :"https://api-alphabot.herokuapp.com/",
+	"youtube" : "https://youtube.com/c/snapdxkz",
+    "github" : "https://SnappyXD.github.io/",
+	"background":"https://telegra.ph/file/d4c05638fa7886a1d8060.jpg",
+	"gambar" : "./settings/snappy.jpg",
+	"session_name":"./session.json"
+}
