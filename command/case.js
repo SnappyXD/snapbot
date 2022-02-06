@@ -502,58 +502,64 @@ case 'shutdown':
 				break
 case 'sticker':case 'stiker':case 'stickergif':case 'stikergif':case 'sgif':case 's':
  
-			if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
-			const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-			const media = await SnappyXD.downloadAndSaveMediaMessage(encmedia)
-			ran = getRandom('.webp')
-			await ffmpeg(`./${media}`)
-			.input(media)
-			.on('start', function (cmd) {
-				console.log(`Started : ${cmd}`)
-				})
-				.on('error', function (err) {
-					console.log(`Error : ${err}`)
-					fs.unlinkSync(media)
-					fakestatus('Eror')
-					})
-			.on('end', function () {
-				console.log('Finish')
-				SnappyXD.sendMessage(from, fs.readFileSync(ran), sticker, { quoted: mek })
-				fs.unlinkSync(media)
-				fs.unlinkSync(ran)
-				})
-				.addOutputOptions([`-vcodec`, `libwebp`, `-vf`, `scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`])
-				.toFormat('webp')
-				.save(ran)
-				} else if ((isMedia && mek.message.videoMessage.seconds < 11 || isQuotedVideo && mek.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds < 11) && args.length == 0) {
-				const encmedia = isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-				const media = await SnappyXD.downloadAndSaveMediaMessage(encmedia)
-				ran = getRandom('.webp')
-				await ffmpeg(`./${media}`)
-				.inputFormat(media.split('.')[1])
-				.on('start', function (cmd) {
-					console.log(`Started : ${cmd}`)
-					})
-					.on('error', function (err) {
-						console.log(`Error : ${err}`)
-						fs.unlinkSync(media)
-						tipe = media.endsWith('.mp4') ? 'video' : 'gif'
-						fakestatus(`❌ Gagal, pada saat mengkonversi ${tipe} ke stiker`)
-						})
-						.on('end', function () {
-							console.log('Finish')
-							SnappyXD.sendMessage(from, fs.readFileSync(ran), sticker, { quoted: mek })
-							fs.unlinkSync(media)
-							fs.unlinkSync(ran)
-							})
-							.addOutputOptions([`-vcodec`, `libwebp`, `-vf`, `scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`])
-							.toFormat('webp')
-							.save(ran)
-							} else  {
-								fakestatus(`Kirim gambar dengan caption ${prefix}sticker atau tag gambar yang sudah dikirim\nDurasi sticker video 1-9 detik...`)
-							}
-					
-             break
+			if (isMedia && !mek.message.videoMessage || isQuotedImage) {
+							const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
+							const media = await SnappyXD.downloadAndSaveMediaMessage(encmedia, `./sticker/${sender}`)
+							ran = getRandom('.webp')
+							await ffmpeg(`${media}`)
+									.input(media)
+									.on('start', function (cmd) {
+										console.log(`Started : ${cmd}`)
+									})
+									.on('error', function (err) {
+										console.log(`Error : ${err}`)
+										fs.unlinkSync(media)
+										reply(mess.error.api)
+									})
+									.on('end', function () {
+										console.log('Finish')
+										exec(`webpmux -set exif ./sticker/data.exif ./sticker/${sender}.webp -o ./sticker/${sender}.webp`, async (error) => {
+											if (error) return reply(mess.error.api)
+											SnappyXD.sendMessage(from, fs.readFileSync(`./sticker/${sender}.webp`), sticker, {quoted: mek})
+											fs.unlinkSync(media)	
+											fs.unlinkSync(`./sticker/${sender}.webp`)	
+										})
+									})
+									.addOutputOptions([`-vcodec`,`libwebp`,`-vf`,`scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`])
+									.toFormat('webp')
+									.save(`./sticker/${sender}.webp`)
+						} else if ((isMedia && mek.message.videoMessage.fileLength < 10000000 || isQuotedVideo && mek.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.fileLength < 10000000)) {
+							const encmedia = isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
+							const media = await SnappyXD.downloadAndSaveMediaMessage(encmedia, `./sticker/${sender}`)
+							ran = getRandom('.webp')
+							sticWait(from)
+								await ffmpeg(`${media}`)
+									.inputFormat(media.split('.')[4])
+									.on('start', function (cmd) {
+										console.log(`Started : ${cmd}`)
+									})
+									.on('error', function (err) {
+										console.log(`Error : ${err}`)
+										fs.unlinkSync(media)
+										tipe = media.endsWith('.mp4') ? 'video' : 'gif'
+										reply(mess.error.api)
+									})
+									.on('end', function () {
+										console.log('Finish')
+										exec(`webpmux -set exif ./sticker/data.exif ./sticker/${sender}.webp -o ./sticker/${sender}.webp`, async (error) => {
+											if (error) return reply(mess.error.api)
+											SnappyXD.sendMessage(from, fs.readFileSync(`./sticker/${sender}.webp`), sticker, {quoted: mek})
+											fs.unlinkSync(media)
+											fs.unlinkSync(`./sticker/${sender}.webp`)
+										})
+									})
+									.addOutputOptions([`-vcodec`,`libwebp`,`-vf`,`scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`])
+									.toFormat('webp')
+									.save(`./sticker/${sender}.webp`)
+						} else {
+							reply(`Kirim gambar/video dengan caption ${prefix}sticker atau tag gambar/video yang sudah dikirim\nNote : Durasi video maximal 10 detik`)
+						}
+						break
 case 'swm':
             pe = args.join('')
             var a = pe.split("|")[0];
@@ -994,6 +1000,7 @@ case 'leave':
 case 'hidetag':
  
 			if (!isGroup) return fakestatus(lang.group())
+			if (!isGroupAdmins && !mek.key.fromMe && !isOwner) return reply(mess.admin)
 			var value = q
 			var group = await SnappyXD.groupMetadata(from)
 			var member = group['participants']
