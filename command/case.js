@@ -465,7 +465,7 @@ case 'menu': case 'help': case 'SnappyXD':
 				break
 case 'infobot': case 'sc':
  
-			sendButLocation(from, lang.script, ' ©' + ownername, thumbnail, [{buttonId: '.scsnappy', buttonText: {displayText: 'Subscribe'}, type: 1},{buttonId: '.igsnappy', buttonText:{displayText: 'Instagram'}, type: 1}], {quoted: mek})
+			sendButLocation(from, lang.script, '©' + ownername, thumbnail, [{buttonId: '.scsnappy', buttonText: {displayText: 'Subscribe'}, type: 1},{buttonId: '.igsnappy', buttonText:{displayText: 'Instagram'}, type: 1}], {quoted: mek})
 break
 
 case 'owner':{
@@ -1388,7 +1388,7 @@ case 'facebook': case 'fb': case 'fbdl': case 'facebookdl':{
                 if (!q.includes('facebook.com') && !q.includes('fb.watch')) return reply('Itu bukan link Facebook')
                 await fakestatus(lang.wait())
 try{
-                zee.Facebook(`${q}`).then(async data => {
+                xa.Facebook(`${q}`).then(async data => {
                     let txt = `*---- FACEBOOK DOWNLOADER ----*\n\n`
                     txt += `*• Title :* ${data.title}\n`
                     txt += `*• Type :* ${data.medias[0].extension}\n`
@@ -1407,7 +1407,7 @@ try{
                 if(!q)return reply(`Example : ${prefix + command} link SoundCloud`)
                 if (!q.includes('m.soundcloud.com')) return reply('Itu bukan link SoundCloud')
                 await fakestatus(lang.wait())
-				zee.SoundCloud(`${q}`).then(async (data) => {
+				xa.SoundCloud(`${q}`).then(async (data) => {
                     let txt = `*---- SOUNDCLOUD DOWNLOAD ----*\n\n`
                     txt += `*• Title :* ${data.title}\n`
                     txt += `*• Duration :* ${data.duration}\n`
@@ -1466,42 +1466,6 @@ fakestatus(lang.wait())
 		})
 		
 		break
-case 'ytmp3': {
- 
-			if (args.length === 0) return reply(`Kirim perintah *${prefix}ytmp3* _Url YouTube_`)
-			if(!isUrl(args[0]) && !args[0].includes('youtu')) return reply('Link tidak valid!')
-			var mulaikah = args.join(' ')
-			await fakestatus(lang.wait())
-                zee.Youtube(mulaikah).then(async (data) => {
-                    let txt = `*---- YOUTUBE AUDIO ----*\n\n`
-                    txt += `*• Quality :* ${data.medias[7].quality}\n`
-                    txt += `*• Type :* ${data.medias[7].extension}\n`
-                    txt += `*• Size :* ${data.medias[7].formattedSize}\n`
-                    txt += `*• Url Source :* ${data.url}\n\n`
-                    txt += `_Mohon tunggu sebentar , uploading media..._`
-                    sendFileFromUrl(from, data.thumbnail, txt, mek)
-                    sendFileFromUrl(from, data.medias[7].url, '', mek)
-                })
-                }
-             break
-case 'ytmp4': {
- 
-			if (args.length === 0) return reply(`Kirim perintah *${prefix}ytmp3* _Url YouTube_`)
-			if(!isUrl(args[0]) && !args[0].includes('youtu')) return reply('Link tidak valid!')
-			var mulaikah = args.join(' ')
-			await fakestatus(lang.wait())
-			zee.Youtube(mulaikah).then(async (data) => {
-                    let txt = `*---- YOUTUBE VIDEO ----*\n\n`
-                    txt += `*• Quality :* ${data.medias[1].quality}\n`
-                    txt += `*• Type :* ${data.medias[1].extension}\n`
-                    txt += `*• Size :* ${data.medias[1].formattedSize}\n`
-                    txt += `*• Url Source :* ${data.url}\n\n`
-                    txt += `_Mohon tunggu sebentar , uploading media..._`
-                    sendFileFromUrl(from, data.thumbnail, txt, mek)
-                    sendFileFromUrl(from, data.medias[1].url, '', mek)                    
-                })
-                }
-             break                         
 case 'play': case 'song':
  
 			if (args.length === 0) return reply(`Kirim perintah *${prefix}play* _Judul lagu_`)
@@ -1510,7 +1474,7 @@ case 'play': case 'song':
 			aramat = aramas.all 
 			var mulaikah = aramat[0].url
 			try {
-				zee.Youtube(mulaikah).then(async (data) => {
+				xa.Youtube(mulaikah).then(async (data) => {
 					if (Number(data.medias[7].formattedSize) >= 100000) return sendMediaURL(from, thumb, `*PLAY MUSIC*\n\n*Title* : ${title}\n*Ext* : MP3\n*Filesize* : ${filesizeF}\n*Link* : ${a.data}\n\n_Untuk durasi lebih dari batas disajikan dalam bentuk link_`)
 						const captions = `*----  PLAY MUSIC ----*
 						
@@ -1527,7 +1491,7 @@ sendButLocation(from, captions, '© ' + ownername, thumbyt, [{buttonId: `.ytmp4 $
 				} catch (err) {
 					fakestatus('Terjadi kesalahan')
 					}
-			
+			break
 		default:
 if (budy.startsWith('>')){
 try {
