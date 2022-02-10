@@ -46,6 +46,10 @@ const moment = require('moment-timezone')
 const request = require('request')
 const speed = require('performance-now')
 const util = require('util')
+const xa = require('xfarr-api')
+const yts = require( 'yt-search')
+const ytdl = require("ytdl-core")
+const zee = require('api-alphabot')
 
 //library
 const { wait, simih, getBuffer, h2k, generateMessageID, getGroupAdmins, getRandom, banner, start, info, success, close } = require('../lib/functions')
@@ -287,7 +291,7 @@ const listmsg = (from, title, desc, list) => {
                            "fileEncSha256": "sR9D2RS5JSifw49HeBADguI23fWDz1aZu4faWG/CyRY=",
                            "directPath": "/v/t62.7118-24/21427642_840952686474581_572788076332761430_n.enc?oh=3f57c1ba2fcab95f2c0bb475d72720ba&oe=602F3D69",
                            "mediaKeyTimestamp": "1610993486",
-                           "jpegThumbnail": ('https://telegra.ph/Gatau-01-22'),
+                           "jpegThumbnail": ('https://telegra.ph/Logo-02-10-5'),
                            "scansSidecar": "1W0XhfaAcDwc7xh1R8lca6Qg/1bB4naFCSngM2LKO2NoP5RI7K+zLw=="
                         }
                     }
