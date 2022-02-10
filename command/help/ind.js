@@ -128,8 +128,6 @@ exports.menu = (prefix) =>{
 │ ⫹⫺ ${prefix}play [query]
 │ ⫹⫺ ${prefix}song [judul lagu]
 │ ⫹⫺ ${prefix}pinterest [query]
-│ ⫹⫺ ${prefix}ytmp3 [url]
-│ ⫹⫺ ${prefix}ytmp4 [url]
 │ ⫹⫺ ${prefix}tiktok [url]
 │ ⫹⫺ ${prefix}tiktoknowm [url]
 │ ⫹⫺ ${prefix}tiktokwm [url]
