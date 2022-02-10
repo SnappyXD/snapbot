@@ -1407,7 +1407,6 @@ try{
                 if(!q)return reply(`Example : ${prefix + command} link SoundCloud`)
                 if (!q.includes('m.soundcloud.com')) return reply('Itu bukan link SoundCloud')
                 await fakestatus(lang.wait())
-try{
 				zee.SoundCloud(`${q}`).then(async (data) => {
                     let txt = `*---- SOUNDCLOUD DOWNLOAD ----*\n\n`
                     txt += `*• Title :* ${data.title}\n`
@@ -1419,10 +1418,7 @@ try{
                     txt += `*Mohon tunggu sebentar, sedang proses pengiriman...*`
                     sendFileFromUrl(from, data.thumbnail, txt, mek)
                     SnappyXD.sendMessage(from , await getBuffer(data.medias[0].url), audio,{ quoted: mek, mimetype: 'audio/mp4' })
-				})} catch {
-					fakestatus('Ftur sedang error')
-					}
-			}
+                    })
 			break
 	case 'telesticker': case 'tstiker': {
 		 
